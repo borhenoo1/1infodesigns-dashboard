@@ -89,6 +89,8 @@ exports.handler = async function (event) {
       });
     } catch (_) {}
 
+    if (insights.length > 0) console.log('SAMPLE KEYS:', Object.keys(insights[0]).join(', '));
+
     const camps = insights
       .filter(c => parseFloat(c.spend || 0) > 0)
       .map(c => {
@@ -111,7 +113,7 @@ exports.handler = async function (event) {
           cpm:  parseFloat(c.cpm || 0),
           im:   parseInt(c.impressions || 0),
           cl:   parseInt(c.clicks || 0),
-          st:   c.effective_status || 'UNKNOWN',
+          st:   c.effective_status || c.status || c.campaign_status || 'UNKNOWN',
           msgs, purch, rev: parseFloat(rev),
           freq: parseFloat(c.frequency || 1)
         };
