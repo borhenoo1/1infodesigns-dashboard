@@ -469,6 +469,15 @@ tbody tr:hover td{background:var(--hov)}
 var S={period:'yest',camps:[],daily:[],label:'',note:'',icon:'',msgs:0};
 var CH={};
 var TC='#3d5070',GC='rgba(255,255,255,0.04)';
+var AGE=[
+  {age:'18-24',sp:0,purch:0,rev:0},{age:'25-34',sp:0,purch:0,rev:0},
+  {age:'35-44',sp:0,purch:0,rev:0},{age:'45-54',sp:0,purch:0,rev:0},
+  {age:'55-64',sp:0,purch:0,rev:0},{age:'65+',  sp:0,purch:0,rev:0}
+];
+var GEN=[
+  {g:'Female',sp:0,purch:0,rev:0,im:0,cl:0,msgs:0},
+  {g:'Male',  sp:0,purch:0,rev:0,im:0,cl:0,msgs:0}
+];
 
 function fc(v){return Number(v).toFixed(2).replace('.',',');}
 function fn(v){return Math.round(Number(v)).toLocaleString('fr-FR');}
@@ -1006,13 +1015,11 @@ function rReport(){
     +'<div class="kbox"><div class="kbox-v">'+fn(tPu)+'</div><div class="kbox-l">Purchases</div></div>'
     +'<div class="kbox"><div class="kbox-v">'+(tMs>0?fc(tSp/tMs)+' €':'—')+'</div><div class="kbox-l">Cost/Msg</div></div>'
     +'</div></div>'
-    +'<div class="rep-sec"><div class="rep-sec-t">Audience Insights</div>'
+    +(GEN[0].sp>0?'<div class="rep-sec"><div class="rep-sec-t">Audience Insights</div>'
     +'<div style="font-size:12px;line-height:2.2;color:var(--t2)">'
-    +'👩 Female: '+fc(GEN[0].sp)+'€ · '+GEN[0].purch+' purchases · ROAS: '+fc(GEN[0].rev/GEN[0].sp)+'x<br>'
+    +'👩 Female: '+fc(GEN[0].sp)+'€ · '+GEN[0].purch+' purchases'+(GEN[0].rev>0&&GEN[0].sp>0?' · ROAS: '+fc(GEN[0].rev/GEN[0].sp)+'x':'')+'<br>'
     +'👨 Male: '+fc(GEN[1].sp)+'€ · '+GEN[1].purch+' purchases<br>'
-    +'🏆 Best age: 45-54 (7 purchases · 2,28€/purchase)<br>'
-    +'💎 Hidden gem: 55-64 (4 purchases · 1,13€/purchase only)'
-    +'</div></div>'
+    +'</div></div>':'')
     +(best?'<div class="rep-sec"><div class="rep-sec-t">Best &amp; Worst</div>'
     +'<div style="font-size:12px;line-height:2.2;color:var(--t2)">'
     +'🏆 Best: <strong style="color:var(--t1)">'+best.n+'</strong> — Score '+best.score+'/100 · CTR '+fp(best.ctr)+'<br>'
