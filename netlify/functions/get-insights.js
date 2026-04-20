@@ -22,10 +22,12 @@ async function callTool(apiKey, toolName, args) {
       params: { name: toolName, arguments: args }
     })
   });
-  if (!res.ok) throw new Error(`Pipeboard API error: ${res.status}`);
-  const json = await res.json();
-  if (json.error) throw new Error(`Pipeboard error: ${json.error.message}`);
-  // MCP returns result.content as array of text blocks
+  const rawText = await res.text();
+  console.log('STATUS:', res.status);
+  console.log('RESPONSE:', rawText.substring(0, 500));
+  if (!res.ok) throw new Error(`Pipeboard API error: ${res.status} — ${rawText.substring(0, 200)}`);
+  const json = JSON.parse(rawText);
+  if (json.error) throw new Error(`Pipeboard error: ${JSON.stringify(json.error)}`);
   const text = json.result?.content?.[0]?.text;
   return text ? JSON.parse(text) : json.result;
 }
