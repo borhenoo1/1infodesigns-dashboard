@@ -1,0 +1,11 @@
+{
+  "name": "infodesigns-marketing-dashboard",
+  "version": "1.0.0",
+  "description": "InfoDesigns Marketing Dashboard — Real-time Meta Ads data",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
